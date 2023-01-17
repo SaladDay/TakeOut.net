@@ -10,4 +10,13 @@ public class ThreadLocalEmpIdDataUtil {
     public static void setEmpId(Long empId){
         threadLocal.set(empId);
     }
+
+    public static Long getUserId(){
+        return threadLocal.get();
+    }
+    public static void setUserId(Long UserId){
+        threadLocal.set(UserId);
+    }
+
+
 }

@@ -33,7 +33,12 @@ public class CheckLoginFilter implements Filter {
         String[] urls = {
                 "/employee/login",
                 "/employee/logout",
-                "/backend/**"
+                "/user/sendMsg",
+                "/user/login",
+                "/user/logout",
+                "/backend/**",
+                "/front/**"
+
         };
 
         //判断是否需要放行
@@ -46,6 +51,14 @@ public class CheckLoginFilter implements Filter {
         if(request.getSession().getAttribute("employee")!=null){
             //登入->放行
             ThreadLocalEmpIdDataUtil.setEmpId((Long) request.getSession().getAttribute("employee"));
+            filterChain.doFilter(request,response);
+            return;
+        }
+
+        if(request.getSession().getAttribute("user")!=null){
+            //登入->放行
+            //放入线程变量中
+            ThreadLocalEmpIdDataUtil.setUserId((Long) request.getSession().getAttribute("user"));
             filterChain.doFilter(request,response);
             return;
         }

@@ -19,7 +19,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
  */
 @ControllerAdvice
 @Slf4j
-@ResponseBody //如果出e就会被此方法接手，若要返回必须加
+@ResponseBody //如果出异常就会被此方法接手，若要返回必须加
 public class GlobalExceptionHandler {
     //异常处理器的返回值类型需要和原方法的返回值类型相同
 

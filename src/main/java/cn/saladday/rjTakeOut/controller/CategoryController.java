@@ -38,15 +38,26 @@ public class CategoryController {
 
     }
 
+    @GetMapping("list")
+    public R<List<Category>> listQuery(Integer type){
+        LambdaQueryWrapper<Category> lqw = new LambdaQueryWrapper<Category>();
+        lqw.eq(type!=null,Category::getType,type);
+        lqw.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
+        List<Category> list = categoryService.list(lqw);
+        return R.success(list);
+    }
+
     @DeleteMapping
-    private R delete(Long ids){
+    public R delete(Long ids){
         categoryService.remove(ids);
         return R.success("");
     }
 
     @PutMapping
-    private R update(@RequestBody Category category){
+    public R update(@RequestBody Category category){
         categoryService.updateById(category);
         return R.success("");
     }
+
+
 }
