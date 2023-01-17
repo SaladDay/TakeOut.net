@@ -408,7 +408,7 @@
                 if(this.setMealDialog.show){
                   item.number = res.data.number
                 }
-                this.getCartData()
+                // this.getCartData()
               }else{
                 this.$notify({ type:'warning', message:res.msg});
               }
@@ -434,7 +434,7 @@
                 if(this.setMealDialog.show){
                   item.number = (res.data.number === 0 ? undefined : res.data.number)
                 }
-                this.getCartData()
+                // this.getCartData()
                 }else{
                   this.$notify({ type:'warning', message:res.msg});
                 }

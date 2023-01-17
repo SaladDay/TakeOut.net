@@ -19,4 +19,4 @@ mybatis-plus:
 #      雪花算法id
       id-type: assign_id
 rjTakeOut:
-  path: G:\img\
+  path: /Users/saladday/Pictures/img/

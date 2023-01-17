@@ -1,3 +1,13 @@
+function sendMsg(data){
+    return $axios({
+        'url':'/user/sendMsg',
+        'method':'post',
+        data
+    })
+}
+
+
+
 function loginApi(data) {
     return $axios({
       'url': '/user/login',
