@@ -43,6 +43,5 @@ public class WebmvcConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(permissionInterceptor).addPathPatterns("/employee/adjust");
-
     }
 }
