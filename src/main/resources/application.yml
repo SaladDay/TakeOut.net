@@ -9,7 +9,9 @@ spring:
     url: jdbc:mysql://localhost:3306/reggie?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: PASSword1224
-
+  cache:
+    redis:
+      time-to-live: 3600000
   redis:
     database: 0
     host: localhost
@@ -25,6 +27,8 @@ mybatis-plus:
     db-config:
 #      雪花算法id
       id-type: assign_id
+
+
 rjTakeOut:
 #  path: /Users/saladday/Pictures/img/
   path: G:\img\

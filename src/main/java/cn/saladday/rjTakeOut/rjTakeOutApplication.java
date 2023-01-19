@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -30,6 +31,7 @@ import java.time.format.DateTimeFormatter;
 @SpringBootApplication
 @ServletComponentScan
 @EnableTransactionManagement
+@EnableCaching
 public class rjTakeOutApplication {
     public static void main(String[] args) {
         SpringApplication.run(rjTakeOutApplication.class,args);

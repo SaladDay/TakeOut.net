@@ -12,10 +12,11 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class Category {
+public class Category implements Serializable {
 
 
     private Long id;

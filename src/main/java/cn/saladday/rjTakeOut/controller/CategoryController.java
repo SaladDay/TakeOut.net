@@ -8,6 +8,9 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +22,10 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
+    private CacheManager cacheManager;
+
+
+    @Autowired
     private RedisTemplate<String,Object> redisTemplate;
 
 
@@ -26,8 +33,8 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping
+    @CacheEvict(value = "category",allEntries = true)
     public R insertCategory(@RequestBody Category category){
-        redisTemplate.delete("category");
         categoryService.save(category);
         return R.success("");
     }
@@ -47,35 +54,36 @@ public class CategoryController {
     }
 
     @GetMapping("list")
+    @Cacheable(value = "category",key = "'category_'+#type",unless = "#result == null")
     public R<List<Category>> listQuery(Integer type){
         List<Category> list = null;
-        String key = "category";
-        //查询缓存中是否有数据
-        list = (List<Category>) redisTemplate.opsForValue().get(key);
-        if(list!=null){
-            log.info("从redis中取出的category数据");
-            return R.success(list);
-        }
+//        String key = "category";
+//        //查询缓存中是否有数据
+//        list = (List<Category>) redisTemplate.opsForValue().get(key);
+//        if(list!=null){
+//            log.info("从redis中取出的category数据");
+//            return R.success(list);
+//        }
         LambdaQueryWrapper<Category> lqw = new LambdaQueryWrapper<Category>();
         lqw.eq(type!=null,Category::getType,type);
         lqw.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
         list = categoryService.list(lqw);
         //存入缓存
-        redisTemplate.opsForValue().set(key,list);
-        log.info("从mysql中取出的category数据");
+//        redisTemplate.opsForValue().set(key,list);
+//        log.info("从mysql中取出的category数据");
         return R.success(list);
     }
 
     @DeleteMapping
+    @CacheEvict(value = "category",allEntries = true)
     public R delete(Long ids){
-        categoryService.remove(ids);
         redisTemplate.delete("category");
         return R.success("");
     }
 
     @PutMapping
+    @CacheEvict(value = "category",allEntries = true)
     public R update(@RequestBody Category category){
-        redisTemplate.delete("category");
         categoryService.updateById(category);
         return R.success("");
     }
